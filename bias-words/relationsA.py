@@ -14,7 +14,9 @@ for r in synset_relations:
 #    print (f'    retval.update({"{"}x for l in ss.{r}() for x in l{"}"})')
 """
 
-import DefRel as dr
+#import DefRel as dr   # this was an attempt to use a Lesk-like algorithm
+#                      # instead of the 'Wordnet gloss relation'
+#                      # see the readme wrt wnet30g_rels.txt
 from nltk.corpus import wordnet as wn
 import numpy as np
 import pickle
@@ -112,7 +114,8 @@ def main1():
     nextnum = 0
     if USE_IXA_RELATIONS:
         IxNumbers = dict()
-        with open('IXA_stuff/wnet30g_rels.txt') as fi:
+        # was: with open('IXA_stuff/wnet30g_rels.txt') as fi:
+        with open('wnet30g_rels.txt') as fi:
             vset = set()
             for lin in fi:
                 ixu = lin[2:12]
@@ -206,7 +209,8 @@ def main1():
 
     # add gloss relation first
     if USE_IXA_RELATIONS:
-        with open('IXA_stuff/wnet30g_rels.txt') as fi:
+        # was: with open('IXA_stuff/wnet30g_rels.txt') as fi:
+        with open('wnet30g_rels.txt') as fi:
             prev_u = None
             for lin in fi:
                 a,b,_,_ = lin.strip().split(' ')

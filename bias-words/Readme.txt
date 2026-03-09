@@ -5,8 +5,11 @@ This directory is some work with re-implementing the code described in
   which is a scheme for retrofitting wordnet synset vectors into an existing
   word model.
 
+  This directory supports only finding the bias words
+
 Files in this directory
-    alg1.py
+    alg1a.py
+        alg1.py, used in the paper was
 	an implementation of algorithm 1 from the paper.
 	goal is to find a list of related 'biasing words' for each synset,
 	ranked according to relatedness.
@@ -18,11 +21,18 @@ Files in this directory
 	'system_of_numeration' and 'element' as biasing words for digit.n.01,
 	both of which occur in the definition of the synset.
 
-    alg2.py
-	an implementation of equation (2) in the paper, which uses the
-	biasing words to compute a weighted average vector for the
-	synset.
-	Takes about 40 seconds to run; currently skips 40% of synsets.
+    alg1a.py  uses an implementation of the 'wordnet gloss relation', 
+        which is a one-many relation between synsets, based on a tagging 
+        of the synset glosses released in 2008.  
+
+    wnet30g_rels.txt 
+        is a file which contains the 'wordnet gloss relation' as I downloaded
+        it from https://ixa2.si.ehu.eus/ukb/
+        I believe that it was developed at the University of the Basque Country
+        from the materials available for download at 
+        https://wordnetcode.princeton.edu/glosstag-files/glosstag.shtml
+        As it is a 15MB file, and I am not certain of my rights with respect 
+        to it, I do not include it in the github repository.
 
     biases.txt
 	a rather large file.  I stored 50 bias words per synset,
