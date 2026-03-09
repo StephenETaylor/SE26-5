@@ -84,8 +84,8 @@ def main():
     B = dict()
     # save biases as single python string:
 
-    for n,ss in enumerate(Snames): 
-    #for n,ss in enumerate('digit.n.01,digit.n.03'.split(',')): 
+    #for n,ss in enumerate(Snames): 
+    for n,ss in enumerate('digit.n.01,digit.n.03'.split(',')): 
         biases = alg1(ss) # this is the chart, table, tabular_array sense
         B[ss] = ' '.join(biases)
         if n > test_interval: 
