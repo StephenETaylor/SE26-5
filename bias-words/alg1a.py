@@ -76,7 +76,17 @@ def alg1(ss):
 def main():
     # check command line for iteration count:
     global max_PPR_iterations 
+
     if len(sys.argv)> 1: max_PPR_iterations = int(sys.argv[1])
+    if len(sys.argv)> 2:
+        syns = sys.argv[2] # Filename of synsets to process
+        with open(syns,'rb') as fi:
+            ToProcess = []
+            for lin in fi:
+                ToProcess.append(lin.strip())
+    else: 
+        ToProcess = Snames
+
 
     start_time = time.time()
     test_interval = 1000
@@ -84,8 +94,8 @@ def main():
     B = dict()
     # save biases as single python string:
 
-    #for n,ss in enumerate(Snames): 
-    for n,ss in enumerate('digit.n.01,digit.n.03'.split(',')): 
+    for n,ss in enumerate(ToProcess): 
+    #for n,ss in enumerate('digit.n.01,digit.n.03'.split(',')): 
         biases = alg1(ss) # this is the chart, table, tabular_array sense
         B[ss] = ' '.join(biases)
         if n > test_interval: 
