@@ -24,7 +24,8 @@ M = relations.loadM()  # a matrix describing synset connnections
 SNumbers = relations.loadS() # SNumbers[ss] -> number used for synset ss in M
 Snames =  relations.loadN() # Synsets[Snames[n]] = n
 
-max_PPR_iterations = 10
+max_PPR_iterations = 10  # now these two are parameters, modified in main()
+Number_of_bias_words = 50
 
 def alg1(ss):
     """
@@ -56,17 +57,17 @@ def alg1(ss):
     #I'm not yet sure how many bias words we ought to look for, but I think
     # that 200 is more than enough
     # P&H says they settled on 25.
-    while len(biases) < 50:
+    while len(biases) < Number_of_bias_words:
         for h in I[::-1]: # I[0] is lowest rank. so start h from highest...
             if h == t: continue
-            if len(biases)>=50:
+            if len(biases)>=Number_of_bias_words:
                 break
             yh = Snames[h]
             SS = wn.synset(yh)
             wl = SS.lemma_names()
             for w in wl:
                 if w in biaset: continue
-                if len(biases)>=50: break
+                if len(biases)>=Number_of_bias_words: break
                 biases.append(w)
                 biaset.add(w)
     
@@ -75,17 +76,19 @@ def alg1(ss):
     
 def main():
     # check command line for iteration count:
-    global max_PPR_iterations 
+    global max_PPR_iterations, Number_of_bias_words 
 
     if len(sys.argv)> 1: max_PPR_iterations = int(sys.argv[1])
     if len(sys.argv)> 2:
         syns = sys.argv[2] # Filename of synsets to process
-        with open(syns,'rb') as fi:
+        with open(syns,'r') as fi:
             ToProcess = []
             for lin in fi:
                 ToProcess.append(lin.strip())
     else: 
         ToProcess = Snames
+    if len(sys.argv) > 3:
+        Number_of_bias_words = int(sys.argv[3])
 
 
     start_time = time.time()

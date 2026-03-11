@@ -13,13 +13,28 @@ data_polarity.py
         writes two files, trainPol.dat and pickled.pol, containing the info.
         I wrote it to use in polarity_scaffold.py
 
-dev3E.bin devCE.bin predictions2.json predictions3E.json
-predictions.json t2.bin t3.bin t.bin trainCE.bin
-    these are data files used or written by 'fossil' python code
+English/   [This directory is not included in the github repository,
+                  but may be separately downloaded. It includes a file
+                  named model.bin, which is a skipgram word-embedding for 
+                  English.]
 
-fit1.py fit2A.py fit2B.py fit2C.py fit2.py fit3D.py fit3E.py fit3.py fit.py
-train1.py train2.py train3.py train.py
-    these are 'fossil' python code
+            This archive is part of the NLPL Word Vectors Repository
+            (http://vectors.nlpl.eu/repository/), version 2.0,
+            published on Friday, December 27, 2019.  Please see the
+            file 'meta.json' in this archive and the overall repository
+            metadata file http://vectors.nlpl.eu/repository/20.json
+            for additional information.
+
+            I am using model 222 instead of model 12, because (check
+            meta.json for confirmation) there is no stopword removal
+            in this model.  Like model 12, it uses skipgram with
+            300 element vectors, so I need not modify other parts of
+            my code.
+
+            The life-time identifier for this model is:
+
+            http://vectors.nlpl.eu/repository/20/222.zip
+
 
 fit4.py
     this file reads a t4.bin file written by train4.py and builds
@@ -77,7 +92,7 @@ t4.bin
       by convention, the output of train4.py after reading ../train.json
 
 td4.bin
-      by convention, the output of train4.py after reading ../train.json
+      by convention, the output of train4.py after reading ../train_dev.json
 
 test_examiner.py test_reader.py test_tester.py
 
