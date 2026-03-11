@@ -53,16 +53,24 @@ Table = np.ndarray(nable_size, dtype = object)
 Nable = np.ndarray(nable_size, dtype = np.uint32)
 
 # set up the index:
-for i,beg in enumerate(range(0, Bytes, int(Bytes/nable_size))):
-    # first first newline after beg
+for i in range(nable_size):#enumerate(range(0, Bytes, math.ceil(Bytes/(nable_size)))):
+    # first interval of File, starts immediately with label
     if i == 0:
-        cp = beg
-    else:
+        cp = beg = 0
+    else:#find first newline after beg
+        beg = int(Bytes*i/nable_size)
+        maybe_end = min(Bytes, int(Bytes*(i+1)/nable_size))
         cp = File.find(b'\n',beg)
+        if cp < 0 or cp>= maybe_end:
+            # did not find newline!
+            raise Exception('interval did not include newline')
+
+        cp += 1
     # read in synset name after newline
-    cp += 1
     Nable[i] = cp
     send = File.find(b' ',cp)
+    if i > 126:  #debugging
+        pass
     Table[i] = File[cp:send] # was: str(File[cp:send], 'utf8')
                              # but file is bytes, not str, so 
 
@@ -74,15 +82,25 @@ def search(synset):
     biases file.  
     Return the byte offset of the first character of the synset.
     """
+    # first search the in-memory Table/Nable pairs to find the interval in File
     bsynset = bytes(synset, 'utf8')
     i = Table.searchsorted(bsynset, side='left')
-    if Table[i][:-1] == bsynset:
+    if i == nable_size:   # this item is somewhere beyond the last Table entry
+        beg = Nable[i-1]
+        end = Bytes
+    
+    elif Table[i][:-1] == bsynset:
         return Nable[i]
-    if i == 0:
-        return 0
-    beg = Nable[i-1]
-    end = Nable[i]
 
+    elif i == 0:
+        return 0 # this is the offset of the first item in file.  But we might
+                 # actually have searched for something earlier?
+
+    else:
+        beg = Nable[i-1]
+        end = Nable[i]
+
+    # Now do a binary search on the located File interval (from beg to end)
     oldMiddle = None
     while end-beg > BytesPerLine:
         middle = (beg+end)//2
@@ -156,5 +174,6 @@ if __name__ == '__main__':
     #i = search('electric_potential.n.01')
     #print(i,File[i:File.find(b'\n',i)])
     #print(get_bias_words('be.v.02'))
-    print(get_bias_words('restrain.v.01'))
+    #print(get_bias_words('restrain.v.01'))
+    print(get_bias_words('wonder.n.01'))
 
