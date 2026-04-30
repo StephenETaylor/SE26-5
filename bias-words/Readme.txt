@@ -1,3 +1,7 @@
+The readme below describes files in a different project, which originally
+worked as described.  The files in this directory are intended to eventually
+produce only the biaswords for the required synsets.  (But may not at this moment.)
+
 This directory is some work with re-implementing the code described in 
   De-Conflated Semantic Representations,
   by Pilehvar and Collier  EMNLP  2016
