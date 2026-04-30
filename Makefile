@@ -7,5 +7,5 @@ hdefs:	train.json dev.json test.json baseline/count_synsets.py
 	cd baseline; python count_synsets.py
 
 train_dev.json:	train.json dev.json test.json baseline/jsonconcat.py
-	baseline/jsonconcat.py
+	cd baseline; python jsonconcat.py
 
